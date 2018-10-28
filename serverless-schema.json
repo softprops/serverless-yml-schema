@@ -1,0 +1,202 @@
+{
+  "title": "JSON Schema for serverless framework",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["service", "provider"],
+  "properties": {
+    "service": {
+      "type": "string",
+      "description": "Unique service identifier"
+    },
+    "frameworkVersion": {
+      "type": "string",
+      "description": "Serverless framework version"
+    },
+    "custom": {
+      "type": "object",
+      "description": "Custom service configuration",
+      "additionalItems": true
+    },
+    "functions": {
+      "type": "object",
+      "description": "Function definitions",
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "description": "Function definition",
+          "properties": {
+            "handler": {
+              "type": "string",
+              "description": "Function entrypont. Syntax will vary by runtime"
+            },
+            "events": {
+              "type": "array",
+              "description": "List of event triggers",
+              "items": {
+                "type": "object",
+                "description": "Event configuration",
+                "patternProperties": {
+                  "http": {
+                    "type": "object",
+                    "description": "API Gateway HTTP trigger",
+                    "required": ["path", "method"],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "description": "HTTP path that will trigger function"
+                      },
+                      "method": {
+                        "type": "string",
+                        "description": "HTTP method that will trigger function",
+                        "default": "get"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "package": {
+      "type": "object",
+      "description": "Function packaging configuration",
+      "properties": {
+        "individually": {
+          "type":"boolean",
+          "description": "Individual packaging for each function. If true you must provide package for each function. Defaults to false",
+          "default": false
+        },
+        "exclude": {
+          "type": "array",
+          "description": "List of exclude patterns",
+          "items": {
+            "type": "string",
+            "description": "Package exclusion pattern"
+          }
+        },
+        "include": {
+          "type": "array",
+          "decription": "List of include patterns",
+          "items": {
+            "type": "string",
+            "description": "Package inclusion pattern"
+          }
+        }
+      }
+    },
+    "plugins": {
+      "type":"array",
+      "description": "Serverless framework plugins",
+      "items": {
+        "type": "string",
+        "description": "plugin identifier"
+      }
+    },
+    "provider": {
+      "type": "object",
+      "description": "FaaS provider settings",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "FaaS provider name",
+          "enum": ["aws","google"],
+          "default":"aws"
+        },
+        "runtime": {
+          "type": "string",
+          "description": "AWS Lambda runtime",
+          "enum": ["python3.6"],
+          "default": "python3.6"
+        },
+        "memorySize": {
+          "type": "number",
+          "description": "Default amount of memory to allocate per function",
+          "enum": [128,256],
+          "default": 128
+        },
+        "stackName": {
+          "type": "string",
+          "description": "custom name for the CloudFormation stack"
+        },
+        "apiName": {
+          "type": "string",
+          "description": "custom name for the API gateway"
+        },
+        "profile": {
+          "type": "string",
+          "description": "default profile for this service"
+        },
+        "timeout": {
+          "type":"number",
+          "description":"amount of time in seconds to timeout lambda",
+          "default": 6
+        },
+        "logRetentionInDays": {
+          "type":"number",
+          "description":"number of days to keep streams in a cloud watch log group",
+          "default": 14
+        },
+        "deploymentPrefix": {
+          "type":"string",
+          "description":"S3 prefix under which deployed artifacts should be stored",
+          "default": "serverless"
+        },
+        "versionFunctions": {
+          "type": "boolean",
+          "description": "Optional function versioning",
+          "default": false
+        },
+        "environment": {
+          "type": "object",
+          "description": "Service wide environment variables",
+          "patternProperties": {
+            "^.*$": {
+              "type": "string",
+              "description": "env entry"
+            }
+          }
+        },
+        "endpointType": {
+          "type": "string",
+          "description": "Optional endpoint configuration for API Gateway REST API",
+          "enum": ["edge", "regional"],
+          "default": "edge"
+        },
+        "region": {
+          "type": "string",
+          "description": "What region to deploy this function",
+          "default": "us-east1"
+        },
+        "stackTags": {
+          "type": "array",
+          "description": "optional stack tags",
+          "items": {
+            "description":"tag",
+            "patternProperties": {
+              "^.*$": {
+                "type": "string",
+                "description": "value"
+              }
+            }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "Optional service wide function tags",
+          "items": {
+            "description":"tag",
+            "patternProperties": {
+              "^.*$": {
+                "type": "string",
+                "description": "value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
