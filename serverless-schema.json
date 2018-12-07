@@ -108,8 +108,8 @@
         "runtime": {
           "type": "string",
           "description": "AWS Lambda runtime",
-          "enum": ["python3.6"],
-          "default": "python3.6"
+          "enum": ["provided"],
+          "default": "provided"
         },
         "memorySize": {
           "type": "number",
