@@ -51,6 +51,29 @@
                         "default": "get"
                       }
                     }
+                  },
+                  "cognitoUserPool": {
+                    "type": "object",
+                    "description": "AWS Cognito UserPool trigger",
+                    "required": ["pool", "trigger"],
+                    "properties": {
+                      "pool": {
+                        "type": "string",
+                        "description": "AWS Cognito UserPool ID"
+                      },
+                      "trigger": {
+                        "enum": [
+                          "CreateAuthChallenge",
+                          "CustomMessage",
+                          "DefineAuthChallenge",
+                          "PostAuthentication",
+                          "PostConfirmation",
+                          "PreAuthentication",
+                          "PreSignUp",
+                          "VerifyAuthChallengeResponse"
+                        ]
+                      }
+                    }
                   }
                 }
               }
