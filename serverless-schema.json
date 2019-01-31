@@ -172,32 +172,26 @@
 				},
 				"region": {
 					"type": "string",
-					"description": "What region to deploy this function",
+					"description": "What region to deploy this function in",
 					"default": "us-east1"
 				},
 				"stackTags": {
-					"type": "array",
+					"type": "object",
 					"description": "optional stack tags",
-					"items": {
-						"description": "tag",
-						"patternProperties": {
-							"^.*$": {
-								"type": "string",
-								"description": "value"
-							}
+					"patternProperties": {
+						"^.*$": {
+							"type": "string",
+							"description": "value"
 						}
 					}
 				},
 				"tags": {
-					"type": "array",
+					"type": "object",
 					"description": "Optional service wide function tags",
-					"items": {
-						"description": "tag",
-						"patternProperties": {
-							"^.*$": {
-								"type": "string",
-								"description": "value"
-							}
+					"patternProperties": {
+						"^.*$": {
+							"type": "string",
+							"description": "value"
 						}
 					}
 				}
