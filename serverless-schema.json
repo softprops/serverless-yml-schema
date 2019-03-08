@@ -119,7 +119,7 @@
 				"memorySize": {
 					"type": "number",
 					"description": "Default amount of memory to allocate per function",
-					"enum": [128, 256],
+					"enum": [128, 256, 512],
 					"default": 128
 				},
 				"stackName": {
